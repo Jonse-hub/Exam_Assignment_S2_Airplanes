@@ -98,13 +98,34 @@
             <Button Content="Slet" Grid.Row="2" FontSize="18" Margin="10" x:Name="Btn_Transport_Slet" Click="Btn_Transport_Slet_Click"/>
             <Button Content="Opret Ny" Grid.Row="3" FontSize="18" Margin="10" x:Name="Btn_Transport_Ny" Click="Btn_Transport_Ny_Click"/>
 
-            <TextBlock Text="19" Grid.Column="1" VerticalAlignment="Center" Background="LightGray" Margin="5"/>
-            <TextBox Text="26/12/2022" Grid.Column="2" VerticalAlignment="Center" Margin="5" x:Name="TB_Transport_Dato"/>
-            <TextBlock Text="24" Grid.Column="3" VerticalAlignment="Center" Background="LightGray" Margin="5"/>
-            <TextBlock Text="11" Grid.Column="4" VerticalAlignment="Center" Background="LightGray" Margin="5"/>
+            <TextBlock Text="19" Grid.Column="1" VerticalAlignment="Center" Background="LightGray" Margin="5" x:Name="TBl_Transport_Id"/>
+            <TextBox Text="12/26/2023 11:52:33 AM" Grid.Column="2" VerticalAlignment="Center" Margin="5" x:Name="TB_Transport_Dato"/>
+            <TextBox Text="3" Grid.Column="3" VerticalAlignment="Center" Margin="5" x:Name="TB_Fly"/>
+            <TextBox Text="12" Grid.Column="4" VerticalAlignment="Center" Margin="5" x:Name="TB_Container"/>
 
-            <DataGrid Grid.ColumnSpan="4" Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" Margin="10" x:Name="DG_Transport" AutoGenerateColumns="False">
-
+            <DataGrid Grid.ColumnSpan="4" Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" Margin="10" x:Name="DG_Transport"  ColumnWidth="*" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn 
+                    Binding="{Binding Path=Id}"
+                    Header="Id"
+                    MinWidth="50" 
+                    IsReadOnly="True" />
+                    <DataGridTextColumn 
+                    Binding="{Binding Path=Dato}"
+                    Header="Dato"
+                    MinWidth="40" 
+                    IsReadOnly="True" />
+                    <DataGridTextColumn 
+                    Binding="{Binding Path=Fly.Id}"
+                    Header="Fly"
+                    MinWidth="40" 
+                    IsReadOnly="True" />
+                    <DataGridTextColumn 
+                    Binding="{Binding Path=Container.Id}"
+                    Header="Container"
+                    MinWidth="50" 
+                    IsReadOnly="True" />
+                </DataGrid.Columns>
             </DataGrid>
 
         </Grid>

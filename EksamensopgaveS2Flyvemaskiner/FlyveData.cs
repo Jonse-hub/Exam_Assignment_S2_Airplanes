@@ -21,6 +21,8 @@ namespace EksamensopgaveS2Flyvemaskiner
         {
             AdapterManager.ContainerTableAdapter = new ContainerTableAdapter();
             AdapterManager.FlyTableAdapter = new FlyTableAdapter();
+            AdapterManager.TransporterTableAdapter = new TransporterTableAdapter();
+            //AdapterManager.TransporterTableAdapter.Fill(flyvDataset.Transporter);
         }
         // }}classe adgang til datasettet i sql 
         public void ReadContainere(List<Container> ContainerListe) // Method. Henter alle varer fra databasen.
@@ -122,7 +124,14 @@ namespace EksamensopgaveS2Flyvemaskiner
 
             foreach (TransporterRow row in transporterRows)
             {
-                Transporter transporter = new Transporter(row.Id, row.Dato, GetFly(flyListe, row.FlyId), GetContainere(containerListe, row.ContainerId));
+                //Transporter transporter = new Transporter(row.Id, row.Dato, GetFly(flyListe, row.FlyId), GetContainere(containerListe, row.ContainerId));
+                Transporter transporter = new Transporter()
+                {
+                    Id = row.Id,
+                    Dato = row.Dato,
+                    Fly = GetFly(flyListe, row.FlyId),
+                    Container = GetContainere(containerListe, row.ContainerId)
+                };
                 transporterListe.Add(transporter);
             }
         }

@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="FlyvDataSet.cs">
+      <DependentUpon>FlyvDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="FlyvDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -106,11 +109,11 @@
     <None Include="FlyvDataSet.xsc">
       <DependentUpon>FlyvDataSet.xsd</DependentUpon>
     </None>
-    <None Include="FlyvDataSet.xsd">
+    <Content Include="FlyvDataSet.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>FlyvDataSet.Designer.cs</LastGenOutput>
-    </None>
+    </Content>
     <None Include="FlyvDataSet.xss">
       <DependentUpon>FlyvDataSet.xsd</DependentUpon>
     </None>

@@ -55,9 +55,9 @@ namespace EksamensopgaveS2Flyvemaskiner
         {
             data.ReadTransporter(transporterListe, flyListe, containerListe);
         }
-        public void UpdateTransporter(Transporter fly)
+        public void UpdateTransporter(Transporter transporter)
         {
-            data.UpdateTransporter(fly);
+            data.UpdateTransporter(transporter);
         }
 
         public void DeleteTransporter(Transporter transporter)

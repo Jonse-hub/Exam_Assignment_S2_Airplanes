@@ -39,16 +39,17 @@ namespace EksamensopgaveS2Flyvemaskiner
             func.ReadContainere(ContainerListe);
             //func.CreateFly(new Fly { MaxConatinerVægt = 22, Registreringsnummeret = "s" });
             func.ReadFly(FlyListe);
-            //ContainerListe_old = ContainerListe;
 
+
+            //ContainerListe_old = ContainerListe;
+            //func.CreateTransporter(new Transporter { Dato = DateTime.Now, Fly = FlyListe[2], Container = ContainerListe[1] });
+            func.ReadTransporter(TransportListe, FlyListe, ContainerListe);
+            
             DG_Container.ItemsSource = ContainerListe;
             DG_Fly.ItemsSource = FlyListe;
-            DG_Transport.ItemsSource = FlyListe;
-
-            
+            DG_Transport.ItemsSource = TransportListe;
 
         }
-
 
         #region container
         private void Btn_Container_Rediger_Click(object sender, RoutedEventArgs e)
@@ -183,11 +184,20 @@ namespace EksamensopgaveS2Flyvemaskiner
             }
             else if(isEditing_Fly == false)
             {
-                TBl_Fly_Id.Text = (DG_Fly.SelectedItem as Fly).Id.ToString();
-                TB_Fly_MaxConatinerVægt.Text = (DG_Fly.SelectedItem as Fly).MaxConatinerVægt.ToString();
-                TB_Fly_Registreringsnummeret.Text = (DG_Fly.SelectedItem as Fly).Registreringsnummeret.ToString();
-                Btn_Fly_Rediger.Content = "Lav Ændring";
-                isEditing_Fly = true;
+
+                try
+                {
+                    TBl_Fly_Id.Text = (DG_Fly.SelectedItem as Fly).Id.ToString();
+                    TB_Fly_MaxConatinerVægt.Text = (DG_Fly.SelectedItem as Fly).MaxConatinerVægt.ToString();
+                    TB_Fly_Registreringsnummeret.Text = (DG_Fly.SelectedItem as Fly).Registreringsnummeret.ToString();
+                    Btn_Fly_Rediger.Content = "Lav Ændring";
+                    isEditing_Fly = true;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
             }
         }
 
@@ -215,18 +225,22 @@ namespace EksamensopgaveS2Flyvemaskiner
         {
             if (isEditing_Transport == true)
             {
-                func.UpdateFly(new Fly { Id = Convert.ToInt32(TBl_Fly_Id.Text), MaxConatinerVægt = Convert.ToInt32(TB_Fly_MaxConatinerVægt.Text), Registreringsnummeret = TB_Fly_Registreringsnummeret.Text });
-                func.ReadFly(FlyListe);
-                DG_Fly.Items.Refresh();
-                Btn_Fly_Rediger.Content = "Rediger";
+                var fly = FlyListe.Single(f => f.Id == int.Parse(TB_Fly.Text));
+                var container = ContainerListe.Single(c => c.Id == Convert.ToInt32(TB_Container.Text));
+
+                func.UpdateTransporter(new Transporter { Id = Convert.ToInt32(TBl_Transport_Id.Text), Dato = Convert.ToDateTime(TB_Transport_Dato.Text), Fly = fly , Container = container});
+                func.ReadTransporter(TransportListe, FlyListe, ContainerListe);
+                DG_Transport.Items.Refresh();
+                Btn_Transport_Rediger.Content = "Rediger";
                 isEditing_Transport = false;
 
             }
             else if (isEditing_Transport == false)
             {
-                TBl_Fly_Id.Text = (DG_Fly.SelectedItem as Fly).Id.ToString();
-                TB_Fly_MaxConatinerVægt.Text = (DG_Fly.SelectedItem as Fly).MaxConatinerVægt.ToString();
-                TB_Fly_Registreringsnummeret.Text = (DG_Fly.SelectedItem as Fly).Registreringsnummeret.ToString();
+                TBl_Transport_Id.Text = (DG_Transport.SelectedItem as Transporter).Id.ToString();
+                TB_Transport_Dato.Text = (DG_Transport.SelectedItem as Transporter).Dato.ToString();
+                TB_Fly.Text = (DG_Transport.SelectedItem as Transporter).Fly.Id.ToString();
+                TB_Container.Text = (DG_Transport.SelectedItem as Transporter).Container.Id.ToString();
                 Btn_Fly_Rediger.Content = "Lav Ændring";
                 isEditing_Transport = true;
             }
@@ -234,12 +248,21 @@ namespace EksamensopgaveS2Flyvemaskiner
 
         private void Btn_Transport_Slet_Click(object sender, RoutedEventArgs e)
         {
-
+            if (DG_Transport.SelectedItem != null)
+            {
+                func.DeleteTransporter(DG_Transport.SelectedItem as Transporter);
+                func.ReadTransporter(TransportListe, FlyListe, ContainerListe);
+                DG_Transport.Items.Refresh();
+            }
         }
 
         private void Btn_Transport_Ny_Click(object sender, RoutedEventArgs e)
         {
-
+            var fly = FlyListe.Single(f => f.Id == int.Parse(TB_Fly.Text));
+            var container = ContainerListe.Single(c => c.Id == Convert.ToInt32(TB_Container.Text));
+            func.CreateTransporter(new Transporter {Dato = Convert.ToDateTime(TB_Transport_Dato.Text), Fly = fly, Container = container });
+            func.ReadTransporter(TransportListe, FlyListe, ContainerListe);
+            DG_Transport.Items.Refresh();
         }
         #endregion
     }
